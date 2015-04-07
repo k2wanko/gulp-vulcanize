@@ -24,11 +24,11 @@ module.exports = function (opts) {
 
 		opts.input = file.path;
 		opts.inputSrc = file.contents;
-		opts.output = path.join(opts.dest, file.relative);
+		opts.output = path.join(path.resolve(file.cwd, opts.dest), file.relative);
 		opts.outputHandler = function(filename, data, finished) {
 			this.push(new gutil.File({
 				cwd: file.cwd,
-				base: path.dirname(filename),
+				base: file.base,
 				path: filename,
 				contents: new Buffer(data)
 			}));
